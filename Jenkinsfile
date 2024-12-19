@@ -4,6 +4,7 @@ pipeline {
         HARBOR_URL = credentials('harbor-registry-url')
         HARBOR_USERNAME = credentials('harbor-credentials-username')
         HARBOR_PASSWORD = credentials('harbor-credentials-password')
+        MAVEN_OPTS = "--add-opens jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED"
     }
     stages {
         stage('Checkout') {
