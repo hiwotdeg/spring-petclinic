@@ -4,6 +4,7 @@ pipeline {
         HARBOR_URL = credentials('harbor-registry-url')
         HARBOR_USERNAME = credentials('harbor-credentials-username')
         HARBOR_PASSWORD = credentials('harbor-credentials-password')
+        
     }
     stages {
         stage('Checkout') {
@@ -16,12 +17,12 @@ pipeline {
             steps {
                 script {
                     sh '''
-                    docker build -t $HARBOR_URL/kft-lab/customers-service ./spring-petclinic-customers-service
-                    docker build -t $HARBOR_URL/kft-lab/vets-service ./spring-petclinic-vets-service
-                    docker build -t $HARBOR_URL/kft-lab/visits-service ./spring-petclinic-visits-service
-                    docker build -t $HARBOR_URL/kft-lab/api-gateway ./spring-petclinic-api-gateway
-                    docker build -t $HARBOR_URL/kft-lab/config-server ./spring-petclinic-config-server
-                    docker build -t $HARBOR_URL/kft-lab/discovery-server ./spring-petclinic-discovery-server
+                    docker build -t $HARBOR_URL/kft-lab/customers-service -f docker/Dockerfile ./spring-petclinic-customers-service
+                    docker build -t $HARBOR_URL/kft-lab/vets-service -f docker/Dockerfile ./spring-petclinic-vets-service
+                    docker build -t $HARBOR_URL/kft-lab/visits-service -f docker/Dockerfile ./spring-petclinic-visits-service
+                    docker build -t $HARBOR_URL/kft-lab/api-gateway -f docker/Dockerfile ./spring-petclinic-api-gateway
+                    docker build -t $HARBOR_URL/kft-lab/config-server -f docker/Dockerfile ./spring-petclinic-config-server
+                    docker build -t $HARBOR_URL/kft-lab/discovery-server -f docker/Dockerfile ./spring-petclinic-discovery-server
                     '''
                 }
             }
