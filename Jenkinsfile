@@ -38,12 +38,12 @@ pipeline {
 
                     echo 'Pushing images to Harbor...'
                     sh """
-                        docker push ${HARBOR_URL}/kft-lab/customers-service:latest
-                        docker push ${HARBOR_URL}/kft-lab/vets-service:latest
-                        docker push ${HARBOR_URL}/kft-lab/visits-service:latest
-                        docker push ${HARBOR_URL}/kft-lab/api-gateway:latest
-                        docker push ${HARBOR_URL}/kft-lab/config-server:latest
-                        docker push ${HARBOR_URL}/kft-lab/discovery-server:latest
+                        docker push ${HARBOR_URL}/kft-lab/customers-service
+                        docker push ${HARBOR_URL}/kft-lab/vets-service
+                        docker push ${HARBOR_URL}/kft-lab/visits-service
+                        docker push ${HARBOR_URL}/kft-lab/api-gateway
+                        docker push ${HARBOR_URL}/kft-lab/config-server
+                        docker push ${HARBOR_URL}/kft-lab/discovery-server
                     """
                 }
             }
