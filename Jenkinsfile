@@ -9,12 +9,13 @@ pipeline {
         stage('Checkout') {
             steps {
                 echo 'Checking out source code...'
-                checkout scm 
+                checkout scm
             }
         }
         stage('Dockerize') {
             steps {
                 script {
+                    echo 'Building docker images for all services...'
                     sh '''
                     # Build all services with the Docker context as the entire project
                     docker build -t $HARBOR_URL/kft-lab/customers-service -f spring-petclinic-customers-service/Dockerfile .
@@ -27,20 +28,23 @@ pipeline {
                 }
             }
         }
-        stage('Push Images') {
+        stage('Push Docker Images to Harbor') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'harbor-credentials', usernameVariable: 'HARBOR_USER', passwordVariable: 'HARBOR_PASS')]) {
-                    sh '''
-                    docker login $HARBOR_URL -u $HARBOR_USERNAME -p $HARBOR_PASSWORD
-                    
-                    # Push the docker images to Harbor
-                    docker push $HARBOR_URL/kft-lab/customers-service
-                    docker push $HARBOR_URL/kft-lab/vets-service
-                    docker push $HARBOR_URL/kft-lab/visits-service
-                    docker push $HARBOR_URL/kft-lab/api-gateway
-                    docker push $HARBOR_URL/kft-lab/config-server
-                    docker push $HARBOR_URL/kft-lab/discovery-server
-                    '''
+                script {
+                    echo 'Logging in to Harbor...'
+                    sh """
+                        echo '${HARBOR_PASSWORD}' | docker login ${HARBOR_URL} -u ${HARBOR_USERNAME} --password-stdin
+                    """
+
+                    echo 'Pushing images to Harbor...'
+                    sh """
+                        docker push ${HARBOR_URL}/kft-lab/customers-service
+                        docker push ${HARBOR_URL}/kft-lab/vets-service
+                        docker push ${HARBOR_URL}/kft-lab/visits-service
+                        docker push ${HARBOR_URL}/kft-lab/api-gateway
+                        docker push ${HARBOR_URL}/kft-lab/config-server
+                        docker push ${HARBOR_URL}/kft-lab/discovery-server
+                    """
                 }
             }
         }
