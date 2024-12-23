@@ -7,12 +7,6 @@ services:
     mem_limit: 512M
     ports:
       - 8888:8888
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://10.254.99.54:8888/actuator/health"]
-      interval: 30s
-      retries: 3
-      start_period: 10s
-      timeout: 10s
 
   discovery-server:
     image: ${HARBOR_URL}/kft-lab/discovery-server
@@ -20,75 +14,55 @@ services:
     mem_limit: 512M
     depends_on:
       - config-server
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://10.254.99.54:8761/actuator/health"]
-      interval: 30s
-      retries: 3
-      start_period: 10s
-      timeout: 10s
     ports:
       - 8761:8761
+    environment:
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://discovery-server:8761/eureka/
 
   customers-service:
     image: ${HARBOR_URL}/kft-lab/customers-service
     container_name: customers-service
     mem_limit: 512M
     depends_on:
-      discovery-server:
-        condition: service_healthy
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://10.254.99.54:8081/actuator/health"]
-      interval: 30s
-      retries: 3
-      start_period: 10s
-      timeout: 10s
+      - discovery-server
     ports:
       - 8081:8081
+    environment:
+      - SPRING_CLOUD_CONFIG_URI=http://config-server:8888
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://discovery-server:8761/eureka/
 
   vets-service:
     image: ${HARBOR_URL}/kft-lab/vets-service
     container_name: vets-service
     mem_limit: 512M
     depends_on:
-      discovery-server:
-        condition: service_healthy
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://10.254.99.54:8083/actuator/health"]
-      interval: 30s
-      retries: 3
-      start_period: 10s
-      timeout: 10s
+      - discovery-server
     ports:
       - 8083:8083
+    environment:
+      - SPRING_CLOUD_CONFIG_URI=http://config-server:8888
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://discovery-server:8761/eureka/
 
   visits-service:
     image: ${HARBOR_URL}/kft-lab/visits-service
     container_name: visits-service
     mem_limit: 512M
     depends_on:
-      discovery-server:
-        condition: service_healthy
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://10.254.99.54:8082/actuator/health"]
-      interval: 30s
-      retries: 3
-      start_period: 10s
-      timeout: 10s
+      - discovery-server
     ports:
       - 8082:8082
+    environment:
+      - SPRING_CLOUD_CONFIG_URI=http://config-server:8888
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://discovery-server:8761/eureka/
 
   api-gateway:
     image: ${HARBOR_URL}/kft-lab/api-gateway
     container_name: api-gateway
     mem_limit: 512M
     depends_on:
-      discovery-server:
-        condition: service_healthy
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://10.254.99.54:8085/actuator/health"]
-      interval: 30s
-      retries: 3
-      start_period: 10s
-      timeout: 10s
+      - discovery-server
     ports:
       - 8085:8080
+    environment:
+      - SPRING_CLOUD_CONFIG_URI=http://config-server:8888
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://discovery-server:8761/eureka/
