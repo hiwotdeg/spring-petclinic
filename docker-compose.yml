@@ -30,6 +30,9 @@ services:
     environment:
       - SPRING_CLOUD_CONFIG_URI=http://config-server:8888
       - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://discovery-server:8761/eureka/
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/petclinic
+      - SPRING_DATASOURCE_USERNAME=petclinicuser
+      - SPRING_DATASOURCE_PASSWORD=petclinicpass
 
   vets-service:
     image: ${HARBOR_URL}/kft-lab/vets-service
@@ -42,6 +45,9 @@ services:
     environment:
       - SPRING_CLOUD_CONFIG_URI=http://config-server:8888
       - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://discovery-server:8761/eureka/
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/petclinic
+      - SPRING_DATASOURCE_USERNAME=petclinicuser
+      - SPRING_DATASOURCE_PASSWORD=petclinicpass
 
   visits-service:
     image: ${HARBOR_URL}/kft-lab/visits-service
@@ -54,6 +60,9 @@ services:
     environment:
       - SPRING_CLOUD_CONFIG_URI=http://config-server:8888
       - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://discovery-server:8761/eureka/
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/petclinic
+      - SPRING_DATASOURCE_USERNAME=petclinicuser
+      - SPRING_DATASOURCE_PASSWORD=petclinicpass
 
   api-gateway:
     image: ${HARBOR_URL}/kft-lab/api-gateway
@@ -66,3 +75,7 @@ services:
     environment:
       - SPRING_CLOUD_CONFIG_URI=http://config-server:8888
       - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://discovery-server:8761/eureka/
+
+networks:
+  petclinic-network:
+    external: true
