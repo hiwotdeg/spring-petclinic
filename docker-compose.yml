@@ -76,6 +76,4 @@ services:
       - SPRING_CLOUD_CONFIG_URI=http://10.254.99.54:8888
       - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://10.254.99.54:8761/eureka/
 
-networks:
-  petclinic-network:
-    external: true
+
