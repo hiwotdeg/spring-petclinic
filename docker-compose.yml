@@ -17,7 +17,7 @@ services:
     ports:
       - 8761:8761
     environment:
-      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://discovery-server:8761/eureka/
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://10.254.99.54:8761/eureka/
 
   customers-service:
     image: ${HARBOR_URL}/kft-lab/customers-service
@@ -28,8 +28,8 @@ services:
     ports:
       - 8081:8081
     environment:
-      - SPRING_CLOUD_CONFIG_URI=http://config-server:8888
-      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://discovery-server:8761/eureka/
+      - SPRING_CLOUD_CONFIG_URI=http://10.254.99.54:8888
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://10.254.99.54:8761/eureka/
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/petclinic
       - SPRING_DATASOURCE_USERNAME=petclinicuser
       - SPRING_DATASOURCE_PASSWORD=petclinicpass
@@ -43,8 +43,8 @@ services:
     ports:
       - 8083:8083
     environment:
-      - SPRING_CLOUD_CONFIG_URI=http://config-server:8888
-      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://discovery-server:8761/eureka/
+      - SPRING_CLOUD_CONFIG_URI=http://10.254.99.54:8888
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://10.254.99.54:8761/eureka/
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/petclinic
       - SPRING_DATASOURCE_USERNAME=petclinicuser
       - SPRING_DATASOURCE_PASSWORD=petclinicpass
@@ -58,8 +58,8 @@ services:
     ports:
       - 8082:8082
     environment:
-      - SPRING_CLOUD_CONFIG_URI=http://config-server:8888
-      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://discovery-server:8761/eureka/
+      - SPRING_CLOUD_CONFIG_URI=http://10.254.99.54:8888
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://10.254.99.54:8761/eureka/
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/petclinic
       - SPRING_DATASOURCE_USERNAME=petclinicuser
       - SPRING_DATASOURCE_PASSWORD=petclinicpass
@@ -73,8 +73,8 @@ services:
     ports:
       - 9001:8080
     environment:
-      - SPRING_CLOUD_CONFIG_URI=http://config-server:8888
-      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://discovery-server:8761/eureka/
+      - SPRING_CLOUD_CONFIG_URI=http://10.254.99.54:8888
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://10.254.99.54:8761/eureka/
 
 networks:
   petclinic-network:
